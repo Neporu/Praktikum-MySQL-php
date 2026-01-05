@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    
+    background-image: url('./assets/facesNep-final.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+} .container, .jumbotron, .navbar {
+    background: rgba(255, 255, 255, 0.2);
+} .dropdown-toggle:hover, .dropdown-menu, li > a:hover{
+    border-radius: 25px;
+    background: rgba(176, 255, 255, 0.8)! important;
+    transition: all 0.5s ease-in-out;
+} body, a { color: black;} .table:has(tr) {
+        background: rgba(255, 255, 255, 0.925)! important;
+} .table {border-radius: 15px;overflow: hidden;} .modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+} .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+} @keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+} .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+} .close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
