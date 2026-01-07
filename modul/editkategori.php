@@ -1,5 +1,5 @@
 <?php
-require_once 'connect.php';
+require_once './../connect.php';
 require_once 'header.php';
 ?>
 <div class="container">
@@ -16,7 +16,7 @@ require_once 'header.php';
                     WHERE idkategori = '$idkategori'";
 
             if ($con->query($sql) === TRUE) {
-                header("Location: kategori.php"); 
+                header("Location: ../index.php"); 
                 exit();
             } else {
                 echo "<div class='alert alert-danger'>Data gagal diubah: " . $con->error . "</div>";
@@ -30,7 +30,7 @@ require_once 'header.php';
     $result = $con->query($sql);
 
     if ($result->num_rows < 1) {
-        header("Location: kategori.php");
+        header("Location: ../index.php");
         exit();
     }
 
@@ -49,7 +49,7 @@ require_once 'header.php';
                     <input type="text" id="nama_kategori" name="nama_kategori" value="<?php echo $row['nama_kategori']; ?>" class="form-control"><br>
 
                     <input type="submit" name="update" class="btn btn-success" value="Update">
-                    <a href="kategori.php" class="btn btn-info">Batal</a>
+                    <a href="../index.php" class="btn btn-info">Batal</a>
                 </form>
             </div>
         </div>
