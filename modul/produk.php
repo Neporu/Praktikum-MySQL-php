@@ -116,7 +116,7 @@ if ($result->num_rows > 0) {?>
             <td><?php echo $attr1 ?></td>
             <td><?php echo $attr2 ?></td>
             <td><?php echo $row['nama_kategori'] ?></td>
-            <td><?php echo $attr4 ?></td>
+            <td>Rp <?php echo number_format($attr4, 0, ',', '.'); ?></td>
             <td><?php echo $attr5 ?></td>
             <td>
                 <button class="btn btn-info btn-sm" onclick="editData('modalEdit','<?php echo $attr1?>', '<?php echo $attr2?>', '<?php echo $attr3?>', '<?php echo $attr4?>', '<?php echo $attr5?>')">
