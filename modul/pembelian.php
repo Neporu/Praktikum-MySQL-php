@@ -1,52 +1,54 @@
-<?php 
-require_once './../connect.php';
-// Proses penghapusan
-if (isset($_POST['delete'])) {
-    $notabeli = $_POST['notabeli']; 
-    $sql = "DELETE FROM tbpembelian WHERE notabeli = '$notabeli'";
-    if ($con->query($sql) === TRUE) {
-        header("Location: pembelian.php");
-        exit();
-    } else {
-        echo "<div class='alert alert-danger'>Gagal menghapus data</div>";
-    }
-}
+<?php require_once './../connect.php';
+
 // Ambil data pembelian
-$sql = "SELECT * FROM tbpembelian order by notabeli";
+$sql = "SELECT pb.notabeli, pb.tgl, p.namapemasok, pg.nama AS nama_pengguna, pb.totalbeli 
+        FROM tbpembelian pb
+        JOIN tbpemasok p ON pb.idpemasok = p.idpemasok
+        JOIN tbpengguna pg ON pb.id = pg.id
+        ORDER BY pb.tgl DESC, pb.notabeli";
 $result = $con->query($sql);
-if ($result->num_rows > 0) {
+
 ?>
-    <h2>Data Pembelian</h2>
-    <br>
-    <a href="insertpembelian.php" class="btn btn-info">Tambah Data</a>
-    <br><br>
+<h2>Data Pembelian</h2>
+<br>
+<a href="#" onclick="replace_modul('form_pembelian')" class="btn btn-info">Tambah Transaksi</a>
+<br><br>
+
+<?php if ($result->num_rows > 0) { ?>
     <table class="table table-bordered table-striped">
         <tr>
             <th>Nota Beli</th>
-            <th>Tgl</th>
-            <th>ID Pengguna</th>
-            <th>ID Pemasok</th>
-            <th>Total Beli</th>
-            <th colspan="2">Aksi</th>
+            <th>Tanggal</th>
+            <th>Pemasok</th>
+            <th>Petugas</th>
+            <th>Total</th>
+            <th>Aksi</th>
         </tr>
         <?php while ($row = $result->fetch_assoc()) { ?>
-            <tr>
-                <td><?php echo $row['notabeli']; ?></td>
-                <td><?php echo $row['tgl']; ?></td>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo $row['idpemasok']; ?></td>
-                <td><?php echo $row['totalbeli']; ?></td>
-                <td>
-                    <a href="editpembelian.php?id=<?php echo $row['notabeli']; ?>" class="btn btn-info btn-sm">Ubah</a>
-                    <form method="post" action="" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data ini?');">
-                        <input type="hidden" name="notabeli" value="<?php echo $row['notabeli']; ?>">
-                        <input type="submit" name="delete" value="Hapus" class="btn btn-danger btn-sm">
-                    </form>
-                </td>
-            </tr>
+        <tr>
+            <td><?php echo $row['notabeli']; ?></td>
+            <td><?php echo date('d-m-Y', strtotime($row['tgl'])); ?></td>
+            <td><?php echo $row['namapemasok']; ?></td>
+            <td><?php echo $row['nama_pengguna']; ?></td>
+            <td>Rp <?php echo number_format($row['totalbeli'], 0, ',', '.'); ?></td>
+            <td>
+                <button class="btn btn-info btn-sm" onclick="viewTransactionDetails('pembelian', '<?php echo $row['notabeli']; ?>')">
+                    Detail
+                </button>
+            </td>
+        </tr>
         <?php } ?>
     </table>
-<?php
-} else {
-    echo "<br><br><div class='alert alert-warning'>Tidak ada data Kategori.</div>";
-}?>
+<?php } else {
+    echo "<div class='alert alert-warning'>Tidak ada data pembelian.</div>";
+} ?>
+
+<!-- Modal Detail Transaksi -->
+<div id="modalDetail" class="modal">
+    <div class="modal-content">
+        <h3>Detail Transaksi</h3>
+        <div id="detailContent"></div>
+        <br>
+        <a href="#" class="btn btn-info" onclick="closeModal('modalDetail')">Tutup</a>
+    </div>
+</div>
